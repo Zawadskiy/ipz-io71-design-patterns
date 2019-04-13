@@ -5,7 +5,7 @@ import java.util.List;
 
 interface Tree
 {
-	void spawn();
+    void spawn();
 }
 
 class Pine implements Tree {
@@ -59,52 +59,52 @@ class Fern implements Tree {
 @FunctionalInterface
 interface Instantiator<T>
 {
-	public T create();
+    public T create();
 }
 
 class ForestFactory
 {
-	protected List<Instantiator<Tree>> TreeTypes;
-	
-	@SafeVarargs
-	public ForestFactory(Instantiator<Tree>...treeTypes)
-	{
-		TreeTypes = Arrays.asList(treeTypes);
-	}
-	
-	public Tree createRandomTree()
-	{
-		int treeTypeId = new Random().nextInt(TreeTypes.size());
-		return TreeTypes.get(treeTypeId).create();
-	}
+    protected List<Instantiator<Tree>> TreeTypes;
+    
+    @SafeVarargs
+    public ForestFactory(Instantiator<Tree>...treeTypes)
+    {
+        TreeTypes = Arrays.asList(treeTypes);
+    }
+    
+    public Tree createRandomTree()
+    {
+        int treeTypeId = new Random().nextInt(TreeTypes.size());
+        return TreeTypes.get(treeTypeId).create();
+    }
 }
 
 
 public class Forest
 {
-	private static void createForest(ForestFactory factory, int treesCount)
-	{
-		for (int i = 0; i < treesCount; i++)
-		{
-			Tree t = factory.createRandomTree();
-			t.spawn();
-		}
-	}
-	
+    private static void createForest(ForestFactory factory, int treesCount)
+    {
+        for (int i = 0; i < treesCount; i++)
+        {
+            Tree t = factory.createRandomTree();
+            t.spawn();
+        }
+    }
+    
     public static void main(String[] args)
     {
-    	ForestFactory conifer = new ForestFactory(() -> new Pine(), () -> new Spruce());
-    	ForestFactory deciduous = new ForestFactory(() -> new Elm(), () -> new Oak());
-    	ForestFactory tropical = new ForestFactory(() -> new Palm(), () -> new Fern());
-    	
-    	System.out.println("Conifer forest:");
-    	createForest(conifer, 10);
-    	
-    	System.out.println("\nDeciduous forest:");
-    	createForest(deciduous, 10);
-    	
-    	System.out.println("\nTropical forest:");
-    	createForest(tropical, 10);
+        ForestFactory conifer = new ForestFactory(() -> new Pine(), () -> new Spruce());
+        ForestFactory deciduous = new ForestFactory(() -> new Elm(), () -> new Oak());
+        ForestFactory tropical = new ForestFactory(() -> new Palm(), () -> new Fern());
+        
+        System.out.println("Conifer forest:");
+        createForest(conifer, 10);
+        
+        System.out.println("\nDeciduous forest:");
+        createForest(deciduous, 10);
+        
+        System.out.println("\nTropical forest:");
+        createForest(tropical, 10);
     }
 
 }
